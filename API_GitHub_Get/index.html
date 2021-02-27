@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="users"></h1>
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200){
+                   var userT = JSON.parse(xhr.responseText);
+                   var output = '';
+                   for(var i in userT){
+                       output += 
+                       '<div class="user">' +
+                        '<img src="'+ userT[i].avatar_url +'" width="70" height="70">' +
+                        '<ul>' +
+                        '<li>' + userT[i].id + '</li>'+
+                        '<li> Login: ' + userT[i].login +'</li>' +
+                        '</ul>';
+                        document.getElementById("users").innerHTML = output;
+                   }
+                }
+            }
+        }
+        xhr.open('GET','https://api.github.com/users',true);
+        xhr.send();
+    </script>
+</body>
+</html>
